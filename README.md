@@ -95,8 +95,8 @@ This project is [MIT](https://github.com/next-step/atdd-subway-service/blob/mast
     - [ ] 유닛 테스트 추가
     - [ ] 구현
   - DistancePricePolicy
-    - [ ] 유닛 테스트 추가
-    - [ ] 구현
+    - [x] 유닛 테스트 추가
+    - [x] 구현
 - 노선별 추가 요금 정책 추가
   - [ ] 인수 테스트 추가
   - LinePricePolicy
