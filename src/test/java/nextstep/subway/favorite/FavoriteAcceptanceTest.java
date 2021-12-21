@@ -105,7 +105,7 @@ public class FavoriteAcceptanceTest extends AcceptanceTest {
 		선릉역 = StationAcceptanceTest.지하철역_등록되어_있음(선릉역_이름).as(StationResponse.class);
 		역삼역 = StationAcceptanceTest.지하철역_등록되어_있음(역삼역_이름).as(StationResponse.class);
 		강남역 = StationAcceptanceTest.지하철역_등록되어_있음(강남역_이름).as(StationResponse.class);
-		LineRequest 삼성_선릉_구간 = new LineRequest(신분당선_이름, LineTest.BG_RED_600, 삼성역.getId(), 선릉역.getId(), 5);
+		LineRequest 삼성_선릉_구간 = new LineRequest(신분당선_이름, LineTest.BG_RED_600, 삼성역.getId(), 선릉역.getId(), 5, 0);
 
 		신분당선 = LineAcceptanceTest.지하철_노선_등록되어_있음(삼성_선릉_구간).as(LineResponse.class);
 
