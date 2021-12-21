@@ -91,9 +91,9 @@ This project is [MIT](https://github.com/next-step/atdd-subway-service/blob/mast
 ## 4단계 구현 목록
 - 경로 조회 시 거리 기준 요금 정보 포함하기
   - [x] 인수 테스트 추가
-  - PriceCalculator
-    - [ ] 유닛 테스트 추가
-    - [ ] 구현
+  - FareCalculator
+    - [x] 유닛 테스트 추가
+    - [x] 구현
   - DistancePricePolicy
     - [x] 유닛 테스트 추가
     - [x] 구현
