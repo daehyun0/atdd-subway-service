@@ -23,7 +23,7 @@ public class Line extends BaseEntity {
     @Column(unique = true)
     private String name;
     private String color;
-    private int usingFare;
+    private int usingFare = 0;
 
     @Embedded
     private Sections sections = new Sections();

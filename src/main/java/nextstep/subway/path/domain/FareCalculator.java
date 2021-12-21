@@ -1,10 +1,14 @@
 package nextstep.subway.path.domain;
 
+import java.util.List;
+
+import nextstep.subway.line.domain.Line;
+
 public class FareCalculator {
 	private static final int DEFAULT_FARE = 1250;
-	private static final DistanceFarePolicy distanceFarePolicy = new DistanceFarePolicy();
 
-	public static int calc(int distance) {
-		return DEFAULT_FARE + distanceFarePolicy.calcPrice(distance);
+	public static int calc(int distance, List<Line> lines) {
+		return DEFAULT_FARE + DistanceFarePolicy.calcPrice(distance)
+			+ LineFarePolicy.calc(lines);
 	}
 }

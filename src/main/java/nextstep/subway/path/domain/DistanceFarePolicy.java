@@ -1,7 +1,7 @@
 package nextstep.subway.path.domain;
 
 public class DistanceFarePolicy {
-	public int calcPrice(int distance) {
+	public static int calcPrice(int distance) {
 		int additionalPrice = 0;
 		if (distance > 50) {
 			additionalPrice += (int) (Math.ceil(((distance - 50) / 8.0)) * 100);

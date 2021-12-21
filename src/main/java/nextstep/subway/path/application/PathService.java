@@ -31,7 +31,8 @@ public class PathService {
 		Station sourceStation = findStationById(findPathRequest.getSource());
 		Station targetStation = findStationById(findPathRequest.getTarget());
 
-		return FindPathResponse.of(pathFinder.findShortestPath(sourceStation, targetStation, sections));
+		return FindPathResponse.of(pathFinder.findShortestPath(sourceStation, targetStation, sections),
+			sections.getLinesDistinct());
 	}
 
 	private Station findStationById(Long id) {

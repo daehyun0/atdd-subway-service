@@ -94,16 +94,16 @@ This project is [MIT](https://github.com/next-step/atdd-subway-service/blob/mast
   - FareCalculator
     - [x] 유닛 테스트 추가
     - [x] 구현
-  - DistancePricePolicy
+  - DistanceFarePolicy
     - [x] 유닛 테스트 추가
     - [x] 구현
 - 노선별 추가 요금 정책 추가
   - [x] 인수 테스트 추가
-  - LinePricePolicy
-    - [ ] 유닛 테스트 구현
-    - [ ] 구현
+  - LineFarePolicy
+    - [x] 유닛 테스트 구현
+    - [x] 구현
 - 연령별 할인 정책 추가
   - [ ] 인수 테스트 추가
-  - AgePricePolicy
+  - AgeFarePolicy
     - [ ] 유닛 테스트 추가
     - [ ] 구현

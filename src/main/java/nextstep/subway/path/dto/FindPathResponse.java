@@ -3,6 +3,7 @@ package nextstep.subway.path.dto;
 import java.util.List;
 import java.util.Objects;
 
+import nextstep.subway.line.domain.Line;
 import nextstep.subway.path.domain.FareCalculator;
 import nextstep.subway.path.domain.FindShortestPathResult;
 import nextstep.subway.station.dto.StationResponse;
@@ -18,10 +19,10 @@ public class FindPathResponse {
 		this.totalFare = totalFare;
 	}
 
-	public static FindPathResponse of(FindShortestPathResult findShortestPathResult) {
+	public static FindPathResponse of(FindShortestPathResult findShortestPathResult, List<Line> lines) {
 		List<StationResponse> path = findShortestPathResult.getStations();
 		int distance = findShortestPathResult.getDistance();
-		int totalFare = FareCalculator.calc(distance);
+		int totalFare = FareCalculator.calc(distance, lines);
 
 		return new FindPathResponse(path, distance, totalFare);
 	}
