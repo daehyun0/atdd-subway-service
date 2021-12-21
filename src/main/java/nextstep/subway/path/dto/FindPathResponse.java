@@ -19,10 +19,10 @@ public class FindPathResponse {
 		this.totalFare = totalFare;
 	}
 
-	public static FindPathResponse of(FindShortestPathResult findShortestPathResult, List<Line> lines) {
+	public static FindPathResponse of(FindShortestPathResult findShortestPathResult, List<Line> lines, int age) {
 		List<StationResponse> path = findShortestPathResult.getStations();
 		int distance = findShortestPathResult.getDistance();
-		int totalFare = FareCalculator.calc(distance, lines);
+		int totalFare = FareCalculator.calc(distance, lines, age);
 
 		return new FindPathResponse(path, distance, totalFare);
 	}

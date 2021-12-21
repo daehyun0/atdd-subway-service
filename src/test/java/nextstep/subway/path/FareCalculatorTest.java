@@ -27,7 +27,7 @@ public class FareCalculatorTest {
 	void calc_with_distance(int expectedDistance, int expectedPrice) {
 		Line 신분당선 = new Line("신분당선", "bg-red-600", new Station("삼성역"), new Station("선릉역"), 10, 0);
 
-		int fare = FareCalculator.calc(expectedDistance, Collections.singletonList(신분당선));
+		int fare = FareCalculator.calc(expectedDistance, Collections.singletonList(신분당선), 20);
 
 		assertThat(expectedPrice).isEqualTo(fare);
 	}
@@ -35,8 +35,8 @@ public class FareCalculatorTest {
 	@ParameterizedTest
 	@MethodSource("calc_with_line_parameter")
 	@DisplayName("기본 요금 + 거리 요금이 반환된다.")
-	void calc_with_line(int expectedDistance, List<Line> lines, int expectedPrice) {
-		int fare = FareCalculator.calc(expectedDistance, lines);
+	void calc_with_line(List<Line> lines, int expectedPrice) {
+		int fare = FareCalculator.calc(10, lines, 20);
 
 		assertThat(expectedPrice).isEqualTo(fare);
 	}
@@ -47,12 +47,23 @@ public class FareCalculatorTest {
 		Line 이호선 = new Line("이호선", "bg-red-600", new Station("삼성역"), new Station("선릉역"), 10, 700);
 		Line 삼호선 = new Line("삼호선", "bg-red-600", new Station("삼성역"), new Station("선릉역"), 10, 900);
 		return Stream.of(
-			Arguments.of(0, Collections.singletonList(신분당선), 1450),
-			Arguments.of(0, Collections.singletonList(구분당선), 1750),
-			Arguments.of(0, Collections.singletonList(이호선), 1950),
-			Arguments.of(0, Collections.singletonList(삼호선), 2150),
-			Arguments.of(0, Arrays.asList(신분당선, 구분당선, 이호선), 1950),
-			Arguments.of(0, Arrays.asList(이호선, 삼호선), 2150)
+			Arguments.of(Collections.singletonList(신분당선), 1450),
+			Arguments.of(Collections.singletonList(구분당선), 1750),
+			Arguments.of(Collections.singletonList(이호선), 1950),
+			Arguments.of(Collections.singletonList(삼호선), 2150),
+			Arguments.of(Arrays.asList(신분당선, 구분당선, 이호선), 1950),
+			Arguments.of(Arrays.asList(이호선, 삼호선), 2150)
 		);
+	}
+
+	@ParameterizedTest
+	@CsvSource(value = {"19, 1250", "13, 720", "6, 450"})
+	@DisplayName("나이에 따라 할인된 요금이 반환된다.")
+	void calc_with_age(int age, int expectedPrice) {
+		Line 신분당선 = new Line("신분당선", "bg-red-600", new Station("삼성역"), new Station("선릉역"), 10, 0);
+
+		int fare = FareCalculator.calc(10, Collections.singletonList(신분당선), age);
+
+		assertThat(expectedPrice).isEqualTo(fare);
 	}
 }

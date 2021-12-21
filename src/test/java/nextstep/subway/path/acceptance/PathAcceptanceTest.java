@@ -83,7 +83,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
 		최단_경로_요청_성공(response);
 		최단_경로_맞는지_확인(response, Arrays.asList(교대역, 가로지르는역1, 가로지르는역2, 가로지르는역3, 양재역 ));
 		최단_경로_거리_확인(response, 4);
-		최단_경로_요금_확인(response, 2150);
+		최단_경로_요금_확인(response, 2450);
 	}
 
 	private void 최단_경로_맞는지_확인(ExtractableResponse<Response> response, List<StationResponse> expected) {

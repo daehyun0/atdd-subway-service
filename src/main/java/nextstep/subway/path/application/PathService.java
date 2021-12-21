@@ -3,6 +3,7 @@ package nextstep.subway.path.application;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import nextstep.subway.auth.domain.LoginMember;
 import nextstep.subway.common.exception.Exceptions;
 import nextstep.subway.line.domain.SectionRepository;
 import nextstep.subway.line.domain.Sections;
@@ -26,13 +27,13 @@ public class PathService {
 		this.pathFinder = pathFinder;
 	}
 
-	public FindPathResponse findShortestPath(FindPathRequest findPathRequest) {
+	public FindPathResponse findShortestPath(LoginMember loginMember, FindPathRequest findPathRequest) {
 		Sections sections = new Sections(sectionRepository.findAll());
 		Station sourceStation = findStationById(findPathRequest.getSource());
 		Station targetStation = findStationById(findPathRequest.getTarget());
 
 		return FindPathResponse.of(pathFinder.findShortestPath(sourceStation, targetStation, sections),
-			sections.getLinesDistinct());
+			sections.getLinesDistinct(), loginMember.getAge());
 	}
 
 	private Station findStationById(Long id) {
