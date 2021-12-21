@@ -15,10 +15,12 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import nextstep.subway.AcceptanceTest;
+import nextstep.subway.auth.acceptance.AuthAcceptanceTest;
 import nextstep.subway.line.acceptance.LineAcceptanceTest;
 import nextstep.subway.line.acceptance.LineSectionAcceptanceTest;
 import nextstep.subway.line.dto.LineRequest;
 import nextstep.subway.line.dto.LineResponse;
+import nextstep.subway.member.MemberAcceptanceTest;
 import nextstep.subway.station.StationAcceptanceTest;
 import nextstep.subway.station.dto.StationResponse;
 
@@ -44,13 +46,16 @@ public class PathAcceptanceTest extends AcceptanceTest {
 		이호선 = 지하철_노선_등록되어_있음("이호선", "bg-red-600", 교대역, 강남역, 10, 200);
 		삼호선 = 지하철_노선_등록되어_있음("삼호선", "bg-red-600", 교대역, 남부터미널역, 5, 500);
 		지하철_노선에_지하철역_등록되어_있음(삼호선, 남부터미널역, 양재역, 3);
+		MemberAcceptanceTest.회원_생성되어_있음(MemberAcceptanceTest.EMAIL, MemberAcceptanceTest.PASSWORD, 10);
+		ExtractableResponse<Response> loginResponse = AuthAcceptanceTest.로그인_시도(MemberAcceptanceTest.EMAIL,
+			MemberAcceptanceTest.PASSWORD);
 
-		ExtractableResponse<Response> response = 최단_경로_요청(교대역, 양재역);
+		ExtractableResponse<Response> response = 최단_경로_요청(loginResponse, 교대역, 양재역);
 
 		최단_경로_요청_성공(response);
 		최단_경로_맞는지_확인(response, Arrays.asList(교대역, 남부터미널역, 양재역));
 		최단_경로_거리_확인(response, 8);
-		최단_경로_요금_확인(response, 1750);
+		최단_경로_요금_확인(response, 700);
 	}
 
 	@Test
@@ -78,7 +83,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
 		최단_경로_요청_성공(response);
 		최단_경로_맞는지_확인(response, Arrays.asList(교대역, 가로지르는역1, 가로지르는역2, 가로지르는역3, 양재역 ));
 		최단_경로_거리_확인(response, 4);
-		최단_경로_요금_확인(response, 2450);
+		최단_경로_요금_확인(response, 2150);
 	}
 
 	private void 최단_경로_맞는지_확인(ExtractableResponse<Response> response, List<StationResponse> expected) {
@@ -95,6 +100,20 @@ public class PathAcceptanceTest extends AcceptanceTest {
 		findPathQueries.put("target", station2.getId().toString());
 
 		return RestAssured.given().log().all()
+			.queryParams(findPathQueries)
+			.when().log().all()
+			.get("/paths")
+			.then().log().all()
+			.extract();
+	}
+
+	private ExtractableResponse<Response> 최단_경로_요청(ExtractableResponse<Response> loginResponse, StationResponse station1, StationResponse station2) {
+		Map<String, String> findPathQueries = new HashMap<>();
+		findPathQueries.put("source", station1.getId().toString());
+		findPathQueries.put("target", station2.getId().toString());
+
+		return RestAssured.given().log().all()
+			.auth().oauth2(loginResponse.jsonPath().getString("accessToken"))
 			.queryParams(findPathQueries)
 			.when().log().all()
 			.get("/paths")

@@ -103,7 +103,7 @@ This project is [MIT](https://github.com/next-step/atdd-subway-service/blob/mast
     - [x] 유닛 테스트 구현
     - [x] 구현
 - 연령별 할인 정책 추가
-  - [ ] 인수 테스트 추가
+  - [x] 인수 테스트 추가
   - AgeFarePolicy
     - [ ] 유닛 테스트 추가
     - [ ] 구현
